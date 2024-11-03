@@ -15,8 +15,7 @@ const App = () => {
   return (
   
     <div>
-
-          
+      
       <BrowserRouter>
       
       <Routes>
@@ -24,17 +23,24 @@ const App = () => {
       <Route path="/" element = {<HomePage />} />
       <Route path="pricing" element= {<Pricing />} />
       <Route path="product" element = {<Product />}  />
-      <Route path = "/app" element = {<AppLayout />} />
+      <Route path = "/app" element = {<AppLayout />}>
+      
+       <Route index element = {<p>List of cities</p>} />
+
+        <Route path="cities" element = {<p>Cities</p>} />
+ 
+        <Route path = "countries" element = {<p>Countries</p>} />
+
+        <Route path = "form" element = {<p>Login</p>} />
+      
+      </Route>
       <Route path  = "/login" element = {<Login />} />
 
       <Route path = "*" element = {<PageNotFound />} />
- 
       </Routes>
       </BrowserRouter>
      </div>
-
   )
-
 
 }
 

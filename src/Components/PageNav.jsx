@@ -1,5 +1,5 @@
 import React from "react"
-import {Link} from "react-router-dom"
+import {Link,NavLink} from "react-router-dom"
 import styles from "./PageNav.module.css"
 import Logo from "./Logo"
 
@@ -19,21 +19,19 @@ const PageNav  = () => {
      <ul>
  
      <li>
-     <Link to="/product">Product</Link>
+     <NavLink to="/product">Product</NavLink>
      </li>
 
      <li>
-     <Link to="/pricing">Pricing</Link>
+     <NavLink to="/pricing">Pricing</NavLink>
      </li>
 
      <li>
-     <Link to="/login">Login</Link>
+     <NavLink className={styles.ctaLink}  to="/login">Login</NavLink>
      </li>
      
      </ul>
-     
-     
-     
+    
      
      </nav>
       
