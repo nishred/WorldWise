@@ -16,6 +16,7 @@ import CountryList from "./Components/CountryList";
 import { CitiesProvider } from "./Contexts/CitiesProvider";
 
 import Form from "./Components/Form"
+import { AuthProvider } from "./Contexts/AuthContext";
 
 
 const App = () => {
@@ -23,7 +24,7 @@ const App = () => {
 
   return (
   
-
+    <AuthProvider>
     <CitiesProvider>
     <div>
       <BrowserRouter>
@@ -51,6 +52,7 @@ const App = () => {
       </BrowserRouter>
      </div>
      </CitiesProvider>
+     </AuthProvider>
   )
 
 }

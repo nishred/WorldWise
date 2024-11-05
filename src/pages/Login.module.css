@@ -24,3 +24,11 @@
   flex-direction: column;
   gap: 0.5rem;
 }
+
+
+.login-btn-wrapper
+{
+  display: flex;
+  justify-content: center;
+}
+
