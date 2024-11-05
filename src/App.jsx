@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from "react";
-import {BrowserRouter,Routes,Route} from "react-router-dom"
+import {BrowserRouter,Routes,Route,Navigate} from "react-router-dom"
 import HomePage from "./pages/HomePage";
 import Pricing from "./pages/Pricing";
 import Product from "./pages/Product";
@@ -9,53 +9,39 @@ import AppLayout from "./pages/AppLayout";
 import Login from "./pages/Login";
 import CityList from "./Components/CityList";
 
+import City from "./Components/City";
 
-const HOST = "http://localhost:8001"
+import CountryList from "./Components/CountryList";
+
+import { CitiesProvider } from "./Contexts/CitiesProvider";
+
+import Form from "./Components/Form"
+
 
 const App = () => {
-
- 
-    const [cities,setCities] = React.useState([])
-
-    
-    // idle | loading | success | error
-    const [status,setStatus] = React.useState("idle")
-
-
-    useEffect(() => {
-
-      async function fetchData()
-      {
-        setStatus("loading")
-        const response = await fetch(`${HOST}/cities`)
-        const json = await response.json()
-        setCities(json)
-        setStatus("success")
-      }
-      fetchData()
-    },[])
 
 
   return (
   
+
+    <CitiesProvider>
     <div>
-      
       <BrowserRouter>
-      
       <Routes>
-      
       <Route path="/" element = {<HomePage />} />
       <Route path="pricing" element= {<Pricing />} />
       <Route path="product" element = {<Product />}  />
       <Route path = "/app" element = {<AppLayout />}>
       
-       <Route index element = {<CityList cities = {cities} status = {status}/>} />
+       <Route index element = {<Navigate replace to = "cities" />} /> 
 
-        <Route path="cities" element = {<CityList cities = {cities} status = {status} />} />
+        <Route path="cities" element = {<CityList />} />
+
+        <Route path="cities/:id" element = {<City />} />
  
-        <Route path = "countries" element = {<p>Countries</p>} />
+        <Route path = "countries" element = {<CountryList />} />
 
-        <Route path = "form" element = {<p>Login</p>} />
+        <Route path = "form" element = {<Form />} />
       
       </Route>
       <Route path  = "/login" element = {<Login />} />
@@ -64,6 +50,7 @@ const App = () => {
       </Routes>
       </BrowserRouter>
      </div>
+     </CitiesProvider>
   )
 
 }

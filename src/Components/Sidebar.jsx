@@ -7,17 +7,14 @@ import {Outlet} from "react-router-dom"
 
 const Sidebar = () => {
 
-
-
   return (
 
    <div className={styles.sidebar}>
 
    <Logo />
    <AppNav />
-   
-   <Outlet />
 
+   <Outlet />
 
    <footer className={styles.footer}>
     
