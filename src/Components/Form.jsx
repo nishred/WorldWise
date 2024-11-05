@@ -19,8 +19,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useCities } from "../Contexts/CitiesProvider";
 
-
-
 export function convertToEmoji(countryCode) {
   const codePoints = countryCode
     .toUpperCase()
@@ -44,12 +42,11 @@ function Form() {
 
   const [lat,lng] = useUrlPosition()
 
-
   const [isLoadingGeoLocation,setIsLoadingGeoLocation] = useState(false)
 
   const [geoLocationError,setGeoLocationError] = useState("")
 
-  const {createCity} = useCities()
+  const {createCity,isLoading} = useCities()
 
 
 
@@ -107,7 +104,7 @@ function Form() {
     return <Message message={geoLocationError} />
 
 
-  function handleSubmit(e)
+ async function handleSubmit(e)
   {
 
      e.preventDefault()
@@ -127,14 +124,16 @@ function Form() {
         
      }
 
-    createCity(newCity)
+    await createCity(newCity)
+
+    navigate("/app")
 
   }
 
 
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className={`${styles.form} ${isLoading?(styles.loading):("")}`} onSubmit={handleSubmit}>
       <div className={styles.row}>
         <label htmlFor="cityName">City name</label>
         <input
@@ -161,8 +160,10 @@ function Form() {
       </div>
 
       <div className={styles.buttons}>
-        <Button type="primary">Add</Button>
-        <BackButton />
+
+      <Button type="primary">ADD</Button>
+       
+      <BackButton />
       </div>
     </form>
   );
