@@ -23,7 +23,7 @@ function City() {
    const lng = searchParams.get("lng")
 
   
-   const {currentCity,getCity,status} = useCities()
+   const {currentCity,getCity,isLoading} = useCities()
 
    const {id} = useParams()
 
@@ -42,9 +42,7 @@ function City() {
   },[id])
 
 
-  console.log(status)
-
-  if(status === "loading" || currentCity === null)
+  if(isLoading || currentCity === null)
     return <Spinner />
    
 

@@ -10,11 +10,11 @@ const HOST = "http://localhost:8001"
 
 const CitiesProvider = ({children}) => {
 
-
     const [cities,setCities] = React.useState([])
 
-    // idle | loading | success | error
-    const [status,setStatus] = React.useState("idle")
+    const [isLoading,setIsLoading] = React.useState(false)
+
+    const [error,setError] = React.useState("")
 
     const [currentCity,setCurrentCity] = useState(null)
 
@@ -23,11 +23,25 @@ const CitiesProvider = ({children}) => {
 
       async function fetchData()
       {
-        setStatus("loading")
+        try{
+
+        setIsLoading(true)
         const response = await fetch(`${HOST}/cities`)
         const json = await response.json()
         setCities(json)
-        setStatus("success")
+
+        }
+        catch(err)
+        {
+ 
+           setError(err.message)
+
+        }
+        finally{
+  
+            setIsLoading(false)
+
+        }
       }
       fetchData()
     },[])
@@ -36,20 +50,8 @@ const CitiesProvider = ({children}) => {
     async function getCity(id)
     {
 
-        setStatus("loading")
-
-
-        await new Promise((resolve,reject) => {
-
-  
-           setTimeout(() => {
-
-
-             resolve()
- 
-           },2000) 
-
-        })
+      try{
+        setIsLoading(true)
 
         const response = await fetch(`${HOST}/cities/${id}`)
 
@@ -57,7 +59,66 @@ const CitiesProvider = ({children}) => {
 
         setCurrentCity(json)
 
-        setStatus("success")
+      }
+      catch(err)
+      {
+          setError(err.message)
+
+      }
+      finally
+      {
+        setIsLoading(false)
+      }
+
+    }
+
+
+
+    async function createCity(newCity)
+    {
+
+        try{
+
+
+         setIsLoading(true)
+
+         const res = await fetch(`${HOST}/cities`,{
+
+
+           method : "POST",
+           body : JSON.stringify(newCity),
+           headers : {
+
+             "Content-Type" : "application/json"
+
+           }
+
+
+         })
+
+         const data = await res.json()
+
+         setCities((cities) => {
+
+             return [...cities,data]
+
+         }) 
+ 
+
+        }  
+        catch(err)
+        {
+           alert("There was an issue with loading the data")
+
+        } 
+        finally
+        {
+
+            setIsLoading(false)
+
+
+        }     
+      
 
     }
 
@@ -66,7 +127,7 @@ const CitiesProvider = ({children}) => {
     return (
 
 
-      <CitiesContext.Provider value={{cities,status,getCity,currentCity}}>
+      <CitiesContext.Provider value={{cities,isLoading,error,getCity,currentCity,createCity}}>
       
       
       {children}

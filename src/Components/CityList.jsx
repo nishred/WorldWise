@@ -13,15 +13,11 @@ import { useCities } from "../Contexts/CitiesProvider"
 const CityList = () => {
 
    
-     const {cities,status} = useCities()
+     const {cities,isLoading} = useCities()
 
 
-    if(status === "idle")
-        return null
-
-    if(status === "loading")
+     if(isLoading)
         return <Spinner />
-
 
     if(!cities.length)
        return (<Message message="Add your first city by clicking somewhere on the map" />)

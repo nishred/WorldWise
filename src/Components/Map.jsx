@@ -9,12 +9,11 @@ import { useCities } from "../Contexts/CitiesProvider"
 import { useGeolocation } from "../hooks/useGeolocation"
 
 import Button from "./Button"
+import { useUrlPosition } from "../hooks/useUrlPosition"
 
 const Map = () => {
 
   const [mapPosition,setMapPosition] = useState([40,0])
-
-  const [searchParams,setSearchParams] = useSearchParams()
 
   const {cities} = useCities()
 
@@ -22,8 +21,7 @@ const Map = () => {
 
   const {isLoading:positionLoading,position:geolocationPosition,getPosition} = useGeolocation()
 
-  const lat = searchParams.get("lat")
-  const lng = searchParams.get("lng")
+   const [lat,lng] = useUrlPosition()
 
    useEffect(() => {
 
@@ -36,15 +34,19 @@ const Map = () => {
    useEffect(() => {
 
       if(geolocationPosition)
-      navigate(`form/?lat=${geolocationPosition.lat}&lng=${geolocationPosition.lng}`)
+       setMapPosition([geolocationPosition.lat,geolocationPosition.lng])
+
 
    },[geolocationPosition])
 
-   
+
+   console.log(mapPosition)
+
+
    return (
  
       <div className={styles.mapContainer} > 
-      <Button type= "position" onClick={getPosition}>{positionLoading?("Loading..."):("use your position")}</Button>    
+      {!geolocationPosition && <Button type= "position" onClick={getPosition}>{positionLoading?("Loading..."):("use your position")}</Button> }   
       <MapContainer className={styles.map} center={mapPosition} zoom={13} scrollWheelZoom={true}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.fr/hot/copyright">OpenStreetMap</a> contributors'
