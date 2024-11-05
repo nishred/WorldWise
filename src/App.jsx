@@ -17,6 +17,7 @@ import { CitiesProvider } from "./Contexts/CitiesProvider";
 
 import Form from "./Components/Form"
 import { AuthProvider } from "./Contexts/AuthContext";
+import ProtectedRoute from "./Components/ProtectedRoute";
 
 
 const App = () => {
@@ -32,7 +33,9 @@ const App = () => {
       <Route path="/" element = {<HomePage />} />
       <Route path="pricing" element= {<Pricing />} />
       <Route path="product" element = {<Product />}  />
-      <Route path = "/app" element = {<AppLayout />}>
+      <Route path = "/app" element = { <ProtectedRoute>
+                                      <AppLayout />
+                                      </ProtectedRoute>}>
       
        <Route index element = {<Navigate replace to = "cities" />} /> 
 

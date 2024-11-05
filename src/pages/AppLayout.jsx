@@ -15,21 +15,6 @@ import { useEffect } from "react";
 
 function AppLayout() {
 
-   const navigate = useNavigate()
-   const {isAuthenticated} = useAuth()
-
-
-   useEffect(() => {
-
-     if(!isAuthenticated)
-      navigate("/login")
-
-
-   },[isAuthenticated])
-
-
-   if(!isAuthenticated)
-      return null
 
   return (
      <div className={styles.app}>
